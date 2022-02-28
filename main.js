@@ -8,6 +8,8 @@ const ctx = ball.getContext("2d");
 ball.width = $width;
 ball.height = $height;
 
+let balls = 20;
+
 class Ball {
   constructor(x, y, radius, sdx, sdy, color) {
     this.x = x;
@@ -48,7 +50,7 @@ class Ball {
 const ballArray = [];
 
 const makeBall = () => {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < balls; i++) {
     const x = Math.random() * $width;
     const y = Math.random() * $height;
     const radius = Math.random() * 20;
@@ -62,8 +64,6 @@ const makeBall = () => {
   }
 };
 
-makeBall();
-
 const ballAnimation = () => {
   ctx.clearRect(0, 0, $width, $height);
   ctx.fillStyle = "red";
@@ -74,4 +74,10 @@ const ballAnimation = () => {
   requestAnimationFrame(ballAnimation);
 };
 
-ballAnimation();
+//controller Game
+const startBallBounce = () => {
+  makeBall();
+  ballAnimation();
+};
+
+startBallBounce();

@@ -26,3 +26,76 @@ h1 {
   height: 100%;
   margin: 0;
 }
+
+.start-mode {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #faebd7;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.start-mode h1 {
+  font-size: 5em;
+  color: rgb(255, 0, 0);
+  font-weight: bold;
+  opacity: 1;
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  transform: translate(-50%, -50%);
+}
+
+.start-mode h2 {
+  font-size: 2.5em;
+  color: rgb(2, 2, 2);
+  transform: translateY(-50px);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.start-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.start-controller input {
+  padding: 0.1rem;
+  width: 20rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: rgb(255, 255, 255);
+  font-size: 1.5em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  transition: ease-in-out, width 0.35s ease-in-out;
+}
+
+.start-controller input:focus {
+  outline: none;
+  border-color: #ff0000;
+  box-shadow: 0 0 10px #719ece;
+}
+
+.start-controller button {
+  font: inherit;
+  cursor: pointer;
+  background-color: #ff0000;
+  border: 1px solid #ccc;
+  padding: 0.4rem 2rem;
+  margin-left: 1rem;
+  color: #fff;
+}
+
+.start-controller button:hover,
+.start-controller button:active {
+  background-color: transparent;
+  border-color: red;
+  color: #000;
+}
