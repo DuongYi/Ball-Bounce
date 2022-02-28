@@ -10,14 +10,29 @@
   <body>
     <div class="container">
       <h1>Ball Bounce</h1>
+      <div class="intro">
+        <h2>Thông tin</h2>
+        <p class="intro-info">
+          Số lượng bóng: <span class="intro-info-sl"></span>
+        </p>
+        <p>Nhấn mũi tên 🠉 để tăng tốc độ bóng</p>
+        <p>Nhấn mũi tên 🠋 để giảm tốc độ bóng</p>
+        <button class="exit-button" id="exit-button">Thoát Game</button>
+      </div>
       <canvas id="canvas"></canvas>
       <div class="start-mode">
         <h1>Ball Bounce</h1>
         <div class="start-container">
           <h2>Nhập số bóng mà bạn muốn tạo</h2>
           <div class="start-controller">
-            <input type="number" min="1" max="1000" value="1" step="10" />
-            <button id="start">Start</button>
+            <input
+              id="ball-numbers"
+              type="number"
+              min="1"
+              max="1000"
+              step="10"
+            />
+            <button id="start-button">Start</button>
           </div>
         </div>
       </div>

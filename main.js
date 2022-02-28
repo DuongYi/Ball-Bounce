@@ -8,8 +8,6 @@ const ctx = ball.getContext("2d");
 ball.width = $width;
 ball.height = $height;
 
-let balls = 20;
-
 class Ball {
   constructor(x, y, radius, sdx, sdy, color) {
     this.x = x;
@@ -45,11 +43,19 @@ class Ball {
       this.sdy *= -1;
     }
   }
+  speedUp() {
+    this.sdx = this.sdx * 1.25;
+    this.sdy = this.sdy * 1.25;
+  }
+  speedDown() {
+    this.sdx = this.sdx * 0.75;
+    this.sdy = this.sdy * 0.75;
+  }
 }
 
-const ballArray = [];
+let ballArray = [];
 
-const makeBall = () => {
+const makeBall = (balls) => {
   for (let i = 0; i < balls; i++) {
     const x = Math.random() * $width;
     const y = Math.random() * $height;
@@ -66,7 +72,6 @@ const makeBall = () => {
 
 const ballAnimation = () => {
   ctx.clearRect(0, 0, $width, $height);
-  ctx.fillStyle = "red";
   ballArray.forEach((ball) => {
     ball.draw();
     ball.checkCollision();
@@ -75,9 +80,42 @@ const ballAnimation = () => {
 };
 
 //controller Game
+let inputBalls = $("#ball-numbers");
+var slballs;
+
+inputBalls.onblur = () => {
+  slballs = inputBalls.value;
+};
+
 const startBallBounce = () => {
-  makeBall();
+  $(".start-mode").style.zIndex = "-1";
+  $(".intro-info-sl").innerHTML = `<strong>${slballs} </strong>`;
+  makeBall(slballs);
   ballAnimation();
 };
 
-startBallBounce();
+$("#start-button").addEventListener("click", startBallBounce);
+
+const exitBallBounce = () => {
+  $(".start-mode").style.zIndex = "1";
+  ballArray = [];
+};
+
+$(".exit-button").addEventListener("click", exitBallBounce);
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+    if (event.code === "ArrowUp") {
+      ballArray.forEach((ball) => {
+        ball.speedUp();
+      });
+    }
+    if (event.code === "ArrowDown") {
+      ballArray.forEach((ball) => {
+        ball.speedDown();
+      });
+    }
+  },
+  false
+);
