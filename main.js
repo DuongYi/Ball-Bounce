@@ -1,13 +1,16 @@
+// Tạo các giá trị mặc định để tái sử dụng
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 const $width = window.innerWidth;
 const $height = window.innerHeight;
 
-const ball = $("#canvas");
+// Lấy khoảng để vẽ bóng từ cây dom
+const ball = $(".canvas");
 const ctx = ball.getContext("2d");
 ball.width = $width;
 ball.height = $height;
 
+// Tạo class Ball
 class Ball {
   constructor(x, y, radius, sdx, sdy, color) {
     this.x = x;
@@ -26,10 +29,12 @@ class Ball {
     this.move();
   }
   move() {
+    //Di chuyển bóng
     this.x += this.sdx;
     this.y += this.sdy;
   }
   checkCollision() {
+    //Check sự va chạm khi bóng va phải các cạnh màn hình
     if (this.x + this.radius > $width) {
       this.sdx *= -1;
     }
@@ -44,17 +49,21 @@ class Ball {
     }
   }
   speedUp() {
+    //Tăng tốc độ bóng
     this.sdx = this.sdx * 1.25;
     this.sdy = this.sdy * 1.25;
   }
   speedDown() {
+    //Giảm tốc độ bóng
     this.sdx = this.sdx * 0.75;
     this.sdy = this.sdy * 0.75;
   }
 }
 
+// Tạo mảng chứa các bóng
 let ballArray = [];
 
+// Tạo bóng
 const makeBall = (balls) => {
   for (let i = 0; i < balls; i++) {
     const x = Math.random() * $width;
@@ -70,23 +79,26 @@ const makeBall = (balls) => {
   }
 };
 
+// Tạo chuyển động cho bóng
 const ballAnimation = () => {
   ctx.clearRect(0, 0, $width, $height);
   ballArray.forEach((ball) => {
     ball.draw();
     ball.checkCollision();
   });
-  requestAnimationFrame(ballAnimation);
+  requestAnimationFrame(ballAnimation); // Tạo lại hàm tạo chuyển động mượt hơn so với setInterval
 };
 
-//controller Game
+// Controller Game
 let inputBalls = $("#ball-numbers");
 var slballs;
 
+// Lấy giá trị đầu vào từ input
 inputBalls.onblur = () => {
   slballs = inputBalls.value;
 };
 
+// Start Game
 const startBallBounce = () => {
   $(".start-mode").style.zIndex = "-1";
   $(".intro-info-sl").innerHTML = `<strong>${slballs} </strong>`;
@@ -96,13 +108,16 @@ const startBallBounce = () => {
 
 $("#start-button").addEventListener("click", startBallBounce);
 
+// Exit Game
 const exitBallBounce = () => {
   $(".start-mode").style.zIndex = "1";
   ballArray = [];
+  inputBalls.value = "";
 };
 
 $(".exit-button").addEventListener("click", exitBallBounce);
 
+// Nhận event từ phím
 document.addEventListener(
   "keydown",
   (event) => {
