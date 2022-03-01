@@ -1,15 +1,21 @@
 // Tạo các giá trị mặc định để tái sử dụng
 const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-const $width = window.screen.width;
-const $height = window.screen.height;
+const $width = window.innerWidth;
+const $height = window.innerHeight;
 
 // Lấy khoảng để vẽ bóng từ cây dom
 const ball = $(".canvas");
-const ctx = ball.getContext("2d");
-ctx.imageSmoothingEnabled = 20;
 ball.width = $width;
 ball.height = $height;
+const ctx = ball.getContext("2d");
+
+// Resize Handler
+window.addEventListener("resize", (e) => {
+  ball.width = window.innerWidth;
+  ball.height = window.innerHeight;
+  ballArray = [];
+  makeBall(slballs);
+});
 
 // Tạo class Ball
 class Ball {
@@ -48,10 +54,10 @@ class Ball {
 
   //Check sự va chạm khi bóng va phải các cạnh màn hình
   checkCollision() {
-    if (this.x + this.radius > $width) {
+    if (this.x + this.radius > ball.width) {
       this.sdx *= -1;
     }
-    if (this.y + this.radius > $height) {
+    if (this.y + this.radius > ball.height) {
       this.sdy *= -1;
     }
     if (this.x - this.radius < 0) {
@@ -81,22 +87,21 @@ let /** Array<Ball> */ ballArray = [];
 // Tạo bóng
 const makeBall = (balls) => {
   for (let i = 0; i < balls; i++) {
-    const x = Math.random() * $width;
-    const y = Math.random() * $height;
-    const radius = Math.random() * 20;
-    const sdx = Math.random() * 5 - 1;
-    const sdy = Math.random() * 5 - 1;
+    const radius = Math.floor(Math.random() * 5) + 5;
+    const x = Math.floor(Math.random() * (ball.width - 50)) + radius;
+    const y = Math.floor(Math.random() * ball.height - 50) + radius;
+    const sdx = Math.random() * 4 - 1;
+    const sdy = Math.random() * 4 - 1;
     const color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
       Math.random() * 255
     })`;
-    const ball = new Ball(x, y, radius, sdx, sdy, color);
-    ballArray.push(ball);
+    ballArray.push(new Ball(x, y, radius, sdx, sdy, color));
   }
 };
 
 // Tạo chuyển động cho bóng
 const ballAnimation = () => {
-  ctx.clearRect(0, 0, $width, $height);
+  ctx.clearRect(0, 0, ball.width, ball.height);
   ballArray.forEach((ball) => {
     ball.draw();
     ball.checkCollision();

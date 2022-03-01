@@ -1,12 +1,13 @@
 body {
   margin: 0;
+  width: 100%;
 }
 
 .container {
-  width: 100vw;
-  height: 100vh;
   position: relative;
   background-color: antiquewhite;
+  width: 100%;
+  height: 100%;
 }
 
 h1 {
@@ -51,6 +52,7 @@ h1 {
   display: block;
   width: 100%;
   height: 100%;
+  margin: 0;
 }
 
 .start-mode {
@@ -148,4 +150,63 @@ h1 {
   background-color: transparent;
   border-color: red;
   color: #000;
+}
+
+@media screen and (max-width: 960px) {
+  h1 {
+    font-size: 3.5em;
+  }
+  .start-mode h1 {
+    font-size: 3.5em;
+  }
+  .start-mode h2 {
+    font-size: 2em;
+  }
+  .container .intro {
+    padding: 10px;
+  }
+
+  .container .intro h2 {
+    font-size: 1.5em;
+  }
+  .container .intro p {
+    font-size: 1em;
+  }
+  .exit-button {
+    padding: 0.4rem 1rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 2em;
+  }
+  .start-mode h1 {
+    font-size: 2.1em;
+  }
+  .start-mode h2 {
+    font-size: 1.15em;
+  }
+  .start-controller input {
+    padding: 0.1rem;
+    width: 10rem;
+  }
+  .start-controller button {
+    padding: 0.4rem 1.5rem;
+    margin-left: 1rem;
+  }
+  .container .intro {
+    padding: 10px;
+  }
+
+  .container .intro h2 {
+    font-size: 1em;
+  }
+  .container .intro p {
+    font-size: 0.7em;
+  }
+  .exit-button {
+    font-size: 1em;
+    padding: 0.3rem 0.7rem;
+  }
 }
