@@ -1,17 +1,27 @@
 // Tạo các giá trị mặc định để tái sử dụng
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
-const $width = window.innerWidth;
-const $height = window.innerHeight;
+const $width = window.screen.width;
+const $height = window.screen.height;
 
 // Lấy khoảng để vẽ bóng từ cây dom
 const ball = $(".canvas");
 const ctx = ball.getContext("2d");
+ctx.imageSmoothingEnabled = 20;
 ball.width = $width;
 ball.height = $height;
 
 // Tạo class Ball
 class Ball {
+  /**
+   * @param {*} x là tọa độ bạn đầu của bóng theo trục x
+   * @param {*} y là tọa độ bạn đầu của bóng theo trục y
+   * @param {*} radius bán kính bóng
+   * @param {*} sdx tốc độ ban đầu của bóng theo trục x
+   * @param {*} sdy tốc độ ban đầu của bóng theo trục y
+   * @param {*} color màu bóng
+   */
+
   constructor(x, y, radius, sdx, sdy, color) {
     this.x = x;
     this.y = y;
@@ -20,6 +30,7 @@ class Ball {
     this.sdy = sdy;
     this.color = color;
   }
+
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -28,13 +39,15 @@ class Ball {
     ctx.fill();
     this.move();
   }
+
+  //Di chuyển bóng
   move() {
-    //Di chuyển bóng
     this.x += this.sdx;
     this.y += this.sdy;
   }
+
+  //Check sự va chạm khi bóng va phải các cạnh màn hình
   checkCollision() {
-    //Check sự va chạm khi bóng va phải các cạnh màn hình
     if (this.x + this.radius > $width) {
       this.sdx *= -1;
     }
@@ -48,20 +61,22 @@ class Ball {
       this.sdy *= -1;
     }
   }
+
+  //Tăng tốc độ bóng
   speedUp() {
-    //Tăng tốc độ bóng
     this.sdx = this.sdx * 1.25;
     this.sdy = this.sdy * 1.25;
   }
+
+  //Giảm tốc độ bóng
   speedDown() {
-    //Giảm tốc độ bóng
     this.sdx = this.sdx * 0.75;
     this.sdy = this.sdy * 0.75;
   }
 }
 
 // Tạo mảng chứa các bóng
-let ballArray = [];
+let /** Array<Ball> */ ballArray = [];
 
 // Tạo bóng
 const makeBall = (balls) => {
@@ -86,12 +101,14 @@ const ballAnimation = () => {
     ball.draw();
     ball.checkCollision();
   });
-  requestAnimationFrame(ballAnimation); // Tạo lại hàm tạo chuyển động mượt hơn so với setInterval
+
+  // Tạo lại hàm tạo chuyển động mượt hơn so với setInterval
+  requestAnimationFrame(ballAnimation);
 };
 
 // Controller Game
 let inputBalls = $("#ball-numbers");
-var slballs;
+var slballs; // Lấy số lượng bóng khi nhập từ bàn phím
 
 // Lấy giá trị đầu vào từ input
 inputBalls.onblur = () => {
